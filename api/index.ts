@@ -1,9 +1,17 @@
 import { NextApiRequest, NextApiResponse } from "next";
 const playwright = require("playwright-aws-lambda");
 
-// extract domain from url
 const getDomain = (url: string) => {
   return new URL(url).hostname;
+};
+
+const validUrl = (url: string) => {
+  try {
+    new URL(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 export default async function handler(
@@ -15,6 +23,11 @@ export default async function handler(
 
   if (!url) {
     response.status(400).send("Missing url parameter");
+    return;
+  }
+
+  if (!validUrl(url as string)) {
+    response.status(400).send("Invalid url parameter");
     return;
   }
 
