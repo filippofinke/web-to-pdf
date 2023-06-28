@@ -57,10 +57,22 @@
   </head>
   <body>
     <h1>PDF Generator</h1>
-    <form action="/api/" method="get">
+    <form id="form">
       <label for="url-input">Insert URL:</label>
       <input type="url" id="url-input" name="url" required />
       <input type="submit" value="Generate PDF" />
     </form>
   </body>
+
+  <script>
+    const form = document.getElementById("form");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const url = document.getElementById("url-input").value;
+
+      window.location = "/api/" + url;
+    });
+  </script>
 </html>

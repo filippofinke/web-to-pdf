@@ -18,8 +18,8 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  // get the url query parameter
-  const { url } = request.query;
+  // replace /api/
+  let url = request.url?.replace("/api/", "");
 
   if (!url) {
     response.status(400).send("Missing url parameter");
@@ -39,6 +39,7 @@ export default async function handler(
 
     const page = await context.newPage();
 
+    console.log("url", url);
     await page.goto(url as string);
 
     const pdfBytes = await page.pdf({
